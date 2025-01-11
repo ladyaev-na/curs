@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="curs.Views.LoginPage"
+             Title="Вход">
+
+    <!-- Градиентный фон -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6A11CB" Offset="0.1"/>
+            <GradientStop Color="#2575FC" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <StackLayout Spacing="20" Padding="30" VerticalOptions="Center">
+
+        <!-- Заголовок -->
+        <Label Text="Вход в систему" 
+               TextColor="White" 
+               FontAttributes="Bold" 
+               FontSize="24" 
+               HorizontalOptions="Center"/>
+
+        <Entry x:Name="Login" Text="Nikita" Placeholder="Введите логин"/>
+        <Entry x:Name="Password" Text="ASDasd123@" Placeholder="Введите пароль" IsPassword="True"/>
+
+        <!-- Кнопка входа -->
+        <Button Text="Войти" 
+                Clicked="exet" 
+                BackgroundColor="#4CAF50" 
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="25"
+                HeightRequest="50"
+                HorizontalOptions="Fill"/>
+
+    </StackLayout>
+</ContentPage>

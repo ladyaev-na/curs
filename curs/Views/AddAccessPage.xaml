@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="curs.Views.AddAccessPage"
+             Title="Добавить доступность">
+
+    <!-- Градиентный фон -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6A11CB" Offset="0.1"/>
+            <GradientStop Color="#2575FC" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <StackLayout Padding="20" Spacing="20">
+        <!-- Поле для ввода даты -->
+        <Frame CornerRadius="15" Padding="15" HasShadow="True" BackgroundColor="White">
+            <StackLayout Spacing="10">
+                <Label Text="Дата (ГГГГ-ММ-ДД)" TextColor="Black" FontAttributes="Bold" FontSize="16"/>
+                <Entry x:Name="DateEntry" Placeholder="Введите дату" TextColor="Black"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- Выбор времени -->
+        <Frame CornerRadius="15" Padding="15" HasShadow="True" BackgroundColor="White">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Выберите время начала и окончания" TextColor="Black" FontAttributes="Bold" FontSize="16"/>
+
+                <!-- Список кнопок от 07:00 до 23:00 -->
+                <FlexLayout x:Name="TimeButtonsContainer" Wrap="Wrap" JustifyContent="SpaceEvenly">
+                    <Button Text="07:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="08:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="09:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="10:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="11:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="12:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="13:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="14:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="15:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="16:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="17:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="18:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="19:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="20:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="21:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="22:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                    <Button Text="23:00" Clicked="OnTimeButtonClicked" Margin="5" BackgroundColor="#E0E0E0" TextColor="Black" CornerRadius="10"/>
+                </FlexLayout>
+
+                <!-- Отображение выбранного времени -->
+                <Label x:Name="SelectedStartTimeLabel" Text="Начало: не выбрано" TextColor="Black" FontSize="14"/>
+                <Label x:Name="SelectedEndTimeLabel" Text="Конец: не выбрано" TextColor="Black" FontSize="14"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Кнопка для подтверждения выбора -->
+        <Button Text="Добавить доступность" 
+                Clicked="OnAddClicked" 
+                BackgroundColor="#4CAF50" 
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="25"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                HeightRequest="50"/>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,68 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:curs.Converters"
+             x:Class="curs.Views.AccessePage"
+             Title="Доступности">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToTextConverter x:Key="BoolToTextConverter"/>
+            <converters:ConfirmToColorConverter x:Key="ConfirmToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6A11CB" Offset="0.1"/>
+            <GradientStop Color="#2575FC" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <StackLayout Padding="20" Spacing="20">
+        <!-- Кнопка для добавления доступности -->
+        <Button Text="Добавить доступность" 
+                Clicked="OnAddAccessClicked"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="25"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                HeightRequest="50"/>
+
+        <!-- Список доступностей -->
+        <ListView x:Name="AccessesListView" SeparatorVisibility="None" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="15" Padding="15" HasShadow="True" BackgroundColor="White" Margin="0,0,0,20">
+                            <StackLayout Spacing="20">
+                                <Label Text="{Binding Date, StringFormat='Дата: {0:dd.MM.yyyy}'}" 
+                                       TextColor="Black" 
+                                       FontAttributes="Bold"
+                                       FontSize="16"/>
+                                <Label Text="{Binding StartChange, StringFormat='Начало: {0:hh\\:mm}'}" 
+                                       TextColor="#666666"
+                                       FontSize="14"/>
+                                <Label Text="{Binding EndChange, StringFormat='Конец: {0:hh\\:mm}'}" 
+                                       TextColor="#666666"
+                                       FontSize="14"/>
+                                <Label Text="{Binding Confirm, Converter={StaticResource BoolToTextConverter}}" 
+                                       TextColor="{Binding Confirm, Converter={StaticResource ConfirmToColorConverter}}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <!-- Кнопка удаления -->
+                                <Button Text="Удалить" 
+                                Clicked="OnDeleteClicked" 
+                                BackgroundColor="#FF0000" 
+                                TextColor="White"
+                                CornerRadius="10"
+                                CommandParameter="{Binding Id}"/>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

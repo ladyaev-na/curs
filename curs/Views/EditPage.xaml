@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="curs.Views.EditPage"
+             Title="Редактирование профиля">
+
+    <!-- Градиентный фон -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6A11CB" Offset="0.1"/>
+            <GradientStop Color="#2575FC" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView Padding="20">
+        <StackLayout VerticalOptions="Center" Spacing="20">
+
+            <!-- Заголовок страницы -->
+            <Label Text="Редактирование профиля" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+
+            <!-- Форма редактирования профиля -->
+            <StackLayout Padding="20" Spacing="15">
+
+                <Entry x:Name="EntrySurname" Placeholder="Введите фамилию" MaximumWidthRequest="300" TextColor="Black" PlaceholderColor="Gray"/>
+                <Entry x:Name="EntryName" Placeholder="Введите имя" MaximumWidthRequest="300" TextColor="Black" PlaceholderColor="Gray"/>
+                <Entry x:Name="EntryPatronymic" Placeholder="Введите отчество" MaximumWidthRequest="300" TextColor="Black" PlaceholderColor="Gray"/>
+                <Entry x:Name="EntryLogin" Placeholder="Введите логин" MaximumWidthRequest="300" TextColor="Black" PlaceholderColor="Gray"/>
+                <Entry x:Name="EntryPassword" IsPassword="True" Placeholder="Введите пароль" MaximumWidthRequest="300" TextColor="Black" PlaceholderColor="Gray"/>
+                <Entry x:Name="EntryConfirmPassword" IsPassword="True" Placeholder="Подтвердите пароль" MaximumWidthRequest="300" TextColor="Black" PlaceholderColor="Gray"/>
+
+            </StackLayout>
+
+            <!-- Кнопка сохранения -->
+            <Button Text="Сохранить" 
+                    Clicked="save" 
+                    BackgroundColor="#4CAF50" 
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    HorizontalOptions="Fill"/>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="curs.Views.IncomePage"
+             Title="Главная">
+
+    <!-- Градиентный фон -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6A11CB" Offset="0.1"/>
+            <GradientStop Color="#2575FC" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <StackLayout Padding="50" Spacing="30" VerticalOptions="Center">
+
+        <!-- Имя пользователя -->
+        <Label Text="{Binding UserNameLabel}"
+               TextColor="White" 
+               FontAttributes="Bold" 
+               FontSize="20" 
+               HorizontalOptions="Center"/>
+
+        <!-- Роль пользователя -->
+        <Label Text="{Binding UserRoleLabel}"
+               TextColor="White" 
+               FontAttributes="Bold" 
+               FontSize="20" 
+               HorizontalOptions="Center"/>
+
+        <!-- Список бонусов -->
+        <CollectionView ItemsSource="{Binding Bonuses}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="White" HasShadow="True">
+                        <StackLayout>
+                            <Label Text="{Binding Title}" 
+                                   FontAttributes="Bold" 
+                                   FontSize="16"/>
+                            <Label Text="{Binding Description}" 
+                                   FontSize="14"/>
+                            <Label Text="{Binding Price, StringFormat='Цена: {0:C}'}" 
+                                   FontSize="14"/>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Кнопка "Редактирование профиля" -->
+        <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">
+            <Button Text="Редактирование профиля" 
+                    Clicked="edit" 
+                    BackgroundColor="Transparent"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CornerRadius="25"
+                    HeightRequest="60"/>
+        </Frame>
+
+        <!-- Кнопка "Доступность" -->
+        <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">
+            <Button Text="Доступность" 
+                    Clicked="accesse" 
+                    BackgroundColor="Transparent"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CornerRadius="25"
+                    HeightRequest="60"/>
+        </Frame>
+    </StackLayout>
+</ContentPage>
