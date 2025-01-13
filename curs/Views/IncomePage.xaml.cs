@@ -2,11 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using curs.Models;
-using System.Net.Http;
-using Microsoft.Maui.Controls;
 using System.Text.Json;
-using System.Linq;
-using System.Text;
 
 namespace curs.Views
 {

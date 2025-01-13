@@ -1,7 +1,4 @@
 using curs.Models;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using System.Collections.ObjectModel;
-using System.Text.Json;
 
 namespace curs.Views;
 

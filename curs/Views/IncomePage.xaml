@@ -11,33 +11,61 @@
             <GradientStop Color="#2575FC" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
-
     <StackLayout Padding="50" Spacing="30" VerticalOptions="Center">
 
-        <StackLayout Spacing="10" BackgroundColor="DarkCyan" Padding="15">
-            <CollectionView ItemsSource="{Binding Bonuses}">
-                <!-- Отступы между элементами -->
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Padding="2">
-                            <Frame CornerRadius="10" Padding="10" Margin="0,5">
-                                <!-- Отступы внутри элемента -->
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16"/>
-                                    <Button BindingContext="{Binding}" Clicked="openButt" HorizontalOptions="EndAndExpand" Text="Посмотреть" BackgroundColor="Salmon"/>
-                                    <!--<Label Text="{Binding Description}" FontSize="14"/>
-                                    <Label Text="{Binding Price, StringFormat='Цена: {0:C}'}" FontSize="14"/>-->
-                                </StackLayout>
-                            </Frame>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+
+        <Frame CornerRadius="20" Padding="0" HasShadow="True">
+            <!-- Градиентный фон -->
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0F2027" Offset="0.1"/>
+                    <!-- Темно-синий -->
+                    <GradientStop Color="#203A43" Offset="0.5"/>
+                    <!-- Средний синий -->
+                    <GradientStop Color="#2C5364" Offset="1.0"/>
+                    <!-- Светло-синий -->
+                </LinearGradientBrush>
+            </Frame.Background>
+            <StackLayout Spacing="10" Padding="15">
+                <StackLayout>
+                    <Label Text="действующие бонусы" FontAttributes="Bold" TextTransform="Uppercase" FontSize="20" TextColor="Yellow" HorizontalOptions="Center"/>
+                </StackLayout>
+                <!-- CollectionView с фиксированной высотой -->
+                <CollectionView ItemsSource="{Binding Bonuses}"
+                    HeightRequest="125">
+                    <!-- Фиксированная высота для трех элементов -->
+                    <!-- Отступы между элементами -->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="2">
+                                <Frame CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="#FFFFFF">
+                                    <!-- Белый фон для Frame -->
+                                    <!-- Отступы внутри элемента -->
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Title}" 
+                                   FontAttributes="Bold" 
+                                   FontSize="16" 
+                                   TextColor="Black"/>
+                                        <Button BindingContext="{Binding}" 
+                                    Clicked="openButt" 
+                                    HorizontalOptions="EndAndExpand" 
+                                    Text="Посмотреть" 
+                                    BackgroundColor="Salmon"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="20"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </Frame>
 
         <!-- Кнопка "Редактирование профиля" -->
         <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">
-            <Button Text="Редактирование профиля" 
+            <Button Text="Профиль" 
                     Clicked="edit" 
                     BackgroundColor="Transparent"
                     TextColor="Black"
