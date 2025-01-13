@@ -16,12 +16,27 @@ namespace curs.Models
         public string Description { get; set; }
 
         [JsonPropertyName("price")]
-        public decimal Price { get; set; }
+        public string Price { get; set; }
 
         [JsonPropertyName("role_id")]
         public ulong RoleId { get; set; }
 
         [JsonPropertyName("role")]
         public Role? Role { get; set; }
+        public string FormattedPrice
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Price)) return "0 ₽";
+                // Разделяем рубли и копейки
+                var parts = Price.Split('.'); var rubles = parts[0];
+                var kopecks = parts.Length > 1 ? parts[1] : "00";
+                // Если копейки "00", отображаем только рубли
+                if (kopecks == "00") 
+                    return $"{rubles} ₽";
+                // Иначе отображаем рубли и копейки
+                return $"{rubles}.{kopecks} ₽";
+            }
+        }
     }
 }

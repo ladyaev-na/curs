@@ -5,49 +5,27 @@ using curs.Models;
 using System.Net.Http;
 using Microsoft.Maui.Controls;
 using System.Text.Json;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Text;
 
 namespace curs.Views
 {
     public partial class IncomePage : ContentPage, INotifyPropertyChanged
     {
-        private string _userNameLabel;
-        private string _userRoleLabel;
+        private User _user;
+        private string _token;
+        private readonly HttpClient _httpClient = new HttpClient();
+
         private ObservableCollection<Bonus> _bonuses;
-
-        public string UserNameLabel
-        {
-            get => _userNameLabel;
-            set
-            {
-                _userNameLabel = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string UserRoleLabel
-        {
-            get => _userRoleLabel;
-            set
-            {
-                _userRoleLabel = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ObservableCollection<Bonus> Bonuses
         {
             get => _bonuses;
             set
             {
                 _bonuses = value;
-                OnPropertyChanged();
+                OnPropertyChanged(); // Уведомление об изменении
             }
         }
-
-        private readonly HttpClient _httpClient;
-        private readonly string _token;
-        private readonly User _user;
 
         public IncomePage(User user, string token)
         {
@@ -62,28 +40,8 @@ namespace curs.Views
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-            // Устанавливаем начальные значения
-            UserNameLabel = _user.Name;
-            UserRoleLabel = GetRoleName(_user.RoleId); // Получаем название роли
-
             // Загружаем бонусы
             LoadBonusesAsync();
-        }
-
-        // Метод для получения названия роли по RoleId
-        private string GetRoleName(ulong roleId)
-        {
-            switch (roleId)
-            {
-                case 1:
-                    return "Администратор";
-                case 2:
-                    return "Пользователь";
-                case 3:
-                    return "Гость";
-                default:
-                    return "Неизвестная роль";
-            }
         }
 
         // Метод для загрузки бонусов с сервера
@@ -95,10 +53,13 @@ namespace curs.Views
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var bonuses = JsonSerializer.Deserialize<List<Bonus>>(content);
+                    var allBonuses = JsonSerializer.Deserialize<List<Bonus>>(content);
+
+                    // Фильтруем бонусы по role_id = 2
+                    var filteredBonuses = allBonuses.Where(b => b.RoleId == 2).ToList();
 
                     // Обновляем список бонусов
-                    Bonuses = new ObservableCollection<Bonus>(bonuses);
+                    Bonuses = new ObservableCollection<Bonus>(filteredBonuses);
                 }
                 else
                 {
@@ -126,6 +87,39 @@ namespace curs.Views
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private async void openButt(object sender, EventArgs e)
+        {
+            // Получаем бонус, связанного с кнопкой 
+            var selectedBonus = ((Button)sender).BindingContext as Bonus;
+
+            if (selectedBonus != null)
+            {
+                try
+                {
+                    // Настраиваем запрос 
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+                    // Отправляем запрос на сервер 
+                    var response = await _httpClient.GetAsync($"http://courseproject4/api/bonus/{selectedBonus.Id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await Navigation.PushAsync(new BonusPage(selectedBonus, _user, _token));
+                    }
+                    else
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        await DisplayAlert("Ошибка", $"Не удалось получить бонус: {response.StatusCode} - {errorContent}", "ОК");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
+                }
+            }
         }
     }
 }

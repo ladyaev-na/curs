@@ -14,38 +14,26 @@
 
     <StackLayout Padding="50" Spacing="30" VerticalOptions="Center">
 
-        <!-- Имя пользователя -->
-        <Label Text="{Binding UserNameLabel}"
-               TextColor="White" 
-               FontAttributes="Bold" 
-               FontSize="20" 
-               HorizontalOptions="Center"/>
-
-        <!-- Роль пользователя -->
-        <Label Text="{Binding UserRoleLabel}"
-               TextColor="White" 
-               FontAttributes="Bold" 
-               FontSize="20" 
-               HorizontalOptions="Center"/>
-
-        <!-- Список бонусов -->
-        <CollectionView ItemsSource="{Binding Bonuses}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame CornerRadius="10" Padding="10" BackgroundColor="White" HasShadow="True">
-                        <StackLayout>
-                            <Label Text="{Binding Title}" 
-                                   FontAttributes="Bold" 
-                                   FontSize="16"/>
-                            <Label Text="{Binding Description}" 
-                                   FontSize="14"/>
-                            <Label Text="{Binding Price, StringFormat='Цена: {0:C}'}" 
-                                   FontSize="14"/>
+        <StackLayout Spacing="10" BackgroundColor="DarkCyan" Padding="15">
+            <CollectionView ItemsSource="{Binding Bonuses}">
+                <!-- Отступы между элементами -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="2">
+                            <Frame CornerRadius="10" Padding="10" Margin="0,5">
+                                <!-- Отступы внутри элемента -->
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16"/>
+                                    <Button BindingContext="{Binding}" Clicked="openButt" HorizontalOptions="EndAndExpand" Text="Посмотреть" BackgroundColor="Salmon"/>
+                                    <!--<Label Text="{Binding Description}" FontSize="14"/>
+                                    <Label Text="{Binding Price, StringFormat='Цена: {0:C}'}" FontSize="14"/>-->
+                                </StackLayout>
+                            </Frame>
                         </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
 
         <!-- Кнопка "Редактирование профиля" -->
         <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">
