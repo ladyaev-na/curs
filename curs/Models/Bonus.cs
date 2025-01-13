@@ -1,6 +1,4 @@
-﻿using System.Data;
-using curs.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace curs.Models
 {

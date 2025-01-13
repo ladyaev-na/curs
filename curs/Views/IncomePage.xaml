@@ -13,7 +13,6 @@
     </ContentPage.Background>
     <StackLayout Padding="50" Spacing="30" VerticalOptions="Center">
 
-
         <Frame CornerRadius="20" Padding="0" HasShadow="True">
             <!-- Градиентный фон -->
             <Frame.Background>
@@ -42,18 +41,8 @@
                                     <!-- Белый фон для Frame -->
                                     <!-- Отступы внутри элемента -->
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Title}" 
-                                   FontAttributes="Bold" 
-                                   FontSize="16" 
-                                   TextColor="Black"/>
-                                        <Button BindingContext="{Binding}" 
-                                    Clicked="openButt" 
-                                    HorizontalOptions="EndAndExpand" 
-                                    Text="Посмотреть" 
-                                    BackgroundColor="Salmon"
-                                    TextColor="White"
-                                    FontAttributes="Bold"
-                                    CornerRadius="20"/>
+                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+                                        <Button BindingContext="{Binding}" Clicked="openButt" HorizontalOptions="EndAndExpand" Text="Посмотреть" BackgroundColor="Salmon" TextColor="White" FontAttributes="Bold" CornerRadius="20"/>
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>
@@ -62,6 +51,7 @@
                 </CollectionView>
             </StackLayout>
         </Frame>
+
 
         <!-- Кнопка "Редактирование профиля" -->
         <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">

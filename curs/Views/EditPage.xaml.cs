@@ -1,77 +1,142 @@
-using System.Text.Json;
+using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using curs.Models;
+using Microsoft.Maui.Controls;
 
-namespace curs.Views;
-
-public partial class EditPage : ContentPage
+namespace curs.Views
 {
-    private readonly HttpClient _httpClient = new HttpClient();
-    private User _user;
-    private string _token;
-    private string _userId;
-
-    public EditPage(User user, string token)
+    public partial class EditPage : ContentPage
     {
-        InitializeComponent();
+        private readonly HttpClient _httpClient = new HttpClient();
+        private User _user;
+        private string _token;
+        private string _userId;
 
-        _user = user;
-        _token = token;
-        _userId = user.Id.ToString();
-
-        EntrySurname.Text = user.Surname;
-        EntryName.Text = user.Name;
-        EntryPatronymic.Text = user.Patronymic;
-        EntryLogin.Text = user.Login;
-    }
-
-    private async void save(object sender, EventArgs e)
-    {
-        var profileData = new
+        public EditPage(User user, string token)
         {
-            surname = EntrySurname.Text,
-            name = EntryName.Text,
-            patronymic = EntryPatronymic.Text,
-            login = EntryLogin.Text,
-            password = EntryPassword.Text,
-            confirmPassword = EntryConfirmPassword.Text
-        };
+            InitializeComponent();
 
-        bool success = await EditeProfile(profileData);
-        if (success)
-        {
-            await DisplayAlert("Успех", "Профиль успешно обновлен", "OK");
-            await Navigation.PopAsync();
+            _user = user;
+            _token = token;
+
+            EntrySurname.Text = user.Surname;
+            EntryName.Text = user.Name;
+            EntryPatronymic.Text = user.Patronymic;
+            EntryLogin.Text = user.Login;
+
         }
-    }
 
-    private async Task<bool> EditeProfile(object profileData)
-    {
-        var jsonContent = new StringContent(JsonSerializer.Serialize(profileData), Encoding.UTF8, "application/json");
-
-        try
+        private async void LoadFineDetails()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-            HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_userId}", jsonContent);
+            var token = Preferences.Get("UserToken", string.Empty);
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return true;
+                // Загружаем информацию о штрафах 
+                var responseFine = await _httpClient.GetAsync($"http://courseproject4/api/fine/{_user.FineId}");
+                var contentFine = await responseFine.Content.ReadAsStringAsync();
+
+
+                if (responseFine.IsSuccessStatusCode)
+                {
+                    var status = JsonSerializer.Deserialize<Status>(contentFine);
+                    FineLabel.Text = status.Name;
+                }
+                else
+                {
+                    FineLabel.Text = "Не удалось загрузить штраф";
+                    await DisplayAlert("Ошибка", $"Код: {responseFine.StatusCode}, Ответ: {contentFine}", "OK");
+                }
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            catch (Exception ex)
             {
-                await DisplayAlert("Ошибка", "Ресурс не найден. Проверьте идентификатор пользователя.", "OK");
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Ошибка", $"Произошла ошибка на сервере. Код: {response.StatusCode}. Сообщение: {errorContent}", "OK");
+                FineLabel.Text = "Ошибка при загрузке штрафа";
+                await DisplayAlert("Ошибка", ex.Message, "OK");
             }
         }
-        catch (Exception ex)
+
+        private async void LoadStatusDetails()
         {
-            await DisplayAlert("Ошибка сети", ex.Message, "ОК");
+            var token = Preferences.Get("UserToken", string.Empty);
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                // Загружаем информацию о штрафах 
+                var responseStatus = await _httpClient.GetAsync($"http://courseproject4/api/status/{_user.StatusId}");
+                var contentStatus = await responseStatus.Content.ReadAsStringAsync();
+
+
+                if (responseStatus.IsSuccessStatusCode)
+                {
+                    var status = JsonSerializer.Deserialize<Status>(contentStatus);
+                    StatusLabel.Text = status.Name;
+                }
+                else
+                {
+                    StatusLabel.Text = "Не удалось загрузить статус";
+                    await DisplayAlert("Ошибка", $"Код: {responseStatus.StatusCode}, Ответ: {contentStatus}", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                StatusLabel.Text = "Ошибка при загрузке статусв";
+                await DisplayAlert("Ошибка", ex.Message, "OK");
+            }
         }
-        return false;
+
+        private async void save(object sender, EventArgs e)
+        {
+            var profileData = new
+            {
+                surname = EntrySurname.Text,
+                name = EntryName.Text,
+                patronymic = EntryPatronymic.Text,
+                login = EntryLogin.Text,
+                password = EntryPassword.Text,
+                confirmPassword = EntryConfirmPassword.Text
+            };
+
+            bool success = await EditeProfile(profileData);
+            if (success)
+            {
+                await DisplayAlert("Успех", "Профиль успешно обновлен", "OK");
+                await Navigation.PopAsync();
+            }
+        }
+
+        private async Task<bool> EditeProfile(object profileData)
+        {
+            var jsonContent = new StringContent(JsonSerializer.Serialize(profileData), Encoding.UTF8, "application/json");
+
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_userId}", jsonContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    await DisplayAlert("Ошибка", "Ресурс не найден. Проверьте идентификатор пользователя.", "OK");
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    await DisplayAlert("Ошибка", $"Произошла ошибка на сервере. Код: {response.StatusCode}. Сообщение: {errorContent}", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ошибка сети", ex.Message, "ОК");
+            }
+            return false;
+        }
     }
 }
