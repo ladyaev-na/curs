@@ -17,36 +17,22 @@
 
             <!-- Статус пользователя -->
             <Frame CornerRadius="10" Padding="10" BackgroundColor="White" HasShadow="True">
-                <StackLayout Spacing="5">
-                    <Label Text="Статус:" 
-                           FontAttributes="Bold" 
-                           FontSize="16" 
-                           TextColor="Black"/>
-                    <Label x:Name="StatusLabel" 
-                           FontSize="14" 
-                           TextColor="Black"/>
+                <StackLayout Spacing="5" Orientation="Horizontal">
+                    <Label Text="Статус:" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+                    <Label x:Name="StatusLabel" FontSize="14" VerticalOptions="Center" TextColor="Black"/>
                 </StackLayout>
             </Frame>
 
             <!-- Штрафы пользователя -->
             <Frame CornerRadius="10" Padding="10" BackgroundColor="White" HasShadow="True">
-                <StackLayout Spacing="5">
-                    <Label Text="Штрафы:" 
-                           FontAttributes="Bold" 
-                           FontSize="16" 
-                           TextColor="Black"/>
-                    <Label x:Name="FineLabel" 
-       FontSize="14" 
-       TextColor="Black"/>
+                <StackLayout Spacing="5" Orientation="Horizontal">
+                    <Label Text="Штрафы:" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+                    <Label x:Name="FineLabel" FontSize="14" VerticalOptions="Center" TextColor="Black"/>
                 </StackLayout>
             </Frame>
 
             <!-- Заголовок страницы -->
-            <Label Text="Редактирование профиля" 
-                   FontSize="24" 
-                   FontAttributes="Bold" 
-                   TextColor="White"
-                   HorizontalOptions="Center"/>
+            <Label Text="Редактирование профиля" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
 
             <!-- Форма редактирования профиля -->
             <StackLayout Padding="20" Spacing="15">

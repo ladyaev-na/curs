@@ -1,10 +1,5 @@
 using curs.Models;
-using System.Collections.ObjectModel;
-using System.Net.Http.Headers;
 using System.Text.Json;
-using Microsoft.Maui.Controls;
-using System.Security.Authentication;
-using Microsoft.Maui.Networking;
 
 namespace curs.Views
 {
@@ -12,6 +7,8 @@ namespace curs.Views
     {
         private readonly HttpClient _httpClient;
         private readonly string _token;
+        private Access access;
+
         public AccessePage(string token)
         {
             InitializeComponent();
@@ -51,6 +48,23 @@ namespace curs.Views
         private async void OnAddAccessClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddAccessPage(_token));
+        }
+        private async void OnUpdateClicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var accessId = ulong.Parse(button.CommandParameter.ToString()); // Получаем ID доступности
+
+            // Находим доступность по ID
+            var access = AccessesListView.ItemsSource.Cast<Access>().FirstOrDefault(a => a.Id == accessId);
+            if (access != null)
+            {
+                // Переходим на страницу редактирования
+                await Navigation.PushAsync(new EditAccessPage(_token, access));
+            }
+            else
+            {
+                await DisplayAlert("Ошибка", "Не удалось найти доступность для редактирования", "OK");
+            }
         }
 
         private async void OnDeleteClicked(object sender, EventArgs e)

@@ -72,6 +72,9 @@
 	  <MauiXaml Update="Views\BonusPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\EditAccessPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\EditPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
