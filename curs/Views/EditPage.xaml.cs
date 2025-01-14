@@ -27,12 +27,14 @@ namespace curs.Views
             EntryPatronymic.Text = user.Patronymic;
             EntryLogin.Text = user.Login;
 
+            LoadFineDetails();
+            LoadStatusDetails();
+
         }
 
         private async void LoadFineDetails()
         {
-            var token = Preferences.Get("UserToken", string.Empty);
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
             try
             {
@@ -43,8 +45,8 @@ namespace curs.Views
 
                 if (responseFine.IsSuccessStatusCode)
                 {
-                    var status = JsonSerializer.Deserialize<Status>(contentFine);
-                    FineLabel.Text = status.Name;
+                    var fine = JsonSerializer.Deserialize<Fine>(contentFine);
+                    FineLabel.Text = fine.Description;
                 }
                 else
                 {
@@ -61,8 +63,7 @@ namespace curs.Views
 
         private async void LoadStatusDetails()
         {
-            var token = Preferences.Get("UserToken", string.Empty);
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
             try
             {
