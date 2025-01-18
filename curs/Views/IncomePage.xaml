@@ -11,70 +11,84 @@
             <GradientStop Color="#2575FC" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
-    <StackLayout Padding="50" Spacing="30" VerticalOptions="Center">
 
-        <Frame CornerRadius="20" Padding="0" HasShadow="True">
-            <!-- Градиентный фон -->
-            <Frame.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#0F2027" Offset="0.1"/>
-                    <!-- Темно-синий -->
-                    <GradientStop Color="#203A43" Offset="0.5"/>
-                    <!-- Средний синий -->
-                    <GradientStop Color="#2C5364" Offset="1.0"/>
-                    <!-- Светло-синий -->
-                </LinearGradientBrush>
-            </Frame.Background>
-            <StackLayout Spacing="10" Padding="15">
-                <StackLayout>
-                    <Label Text="действующие бонусы" FontAttributes="Bold" TextTransform="Uppercase" FontSize="20" TextColor="Yellow" HorizontalOptions="Center"/>
+    <!-- Используем Grid для управления расположением -->
+    <Grid>
+        <!-- Основной контент -->
+        <StackLayout Padding="30" Spacing="20" VerticalOptions="Start">
+            <!-- Карточка с бонусами -->
+            <Frame CornerRadius="20" Padding="0" HasShadow="True">
+                <Frame.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#0F2027" Offset="0.1"/>
+                        <GradientStop Color="#203A43" Offset="0.5"/>
+                        <GradientStop Color="#2C5364" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Frame.Background>
+                <StackLayout Spacing="10" Padding="15">
+                    <!-- Заголовок -->
+                    <Label Text="Действующие бонусы" 
+                           FontAttributes="Bold" 
+                           TextTransform="Uppercase" 
+                           FontSize="20" 
+                           TextColor="Yellow" 
+                           HorizontalOptions="Center"/>
+
+                    <!-- Список бонусов -->
+                    <CollectionView ItemsSource="{Binding Bonuses}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="2">
+                                    <Frame CornerRadius="10" Padding="10" Margin="0,5" HasShadow="True" BackgroundColor="#FFFFFF">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Title}" 
+                                                   FontAttributes="Bold" 
+                                                   FontSize="16" 
+                                                   TextColor="Black"
+                                                   VerticalOptions="Center"/>
+                                            <Button BindingContext="{Binding}" 
+                                                    Clicked="openButt" 
+                                                    HorizontalOptions="EndAndExpand" 
+                                                    Text="Посмотреть" 
+                                                    BackgroundColor="Salmon" 
+                                                    TextColor="White" 
+                                                    FontAttributes="Bold" 
+                                                    CornerRadius="20"
+                                                    Padding="20,10"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
-                <!-- CollectionView с фиксированной высотой -->
-                <CollectionView ItemsSource="{Binding Bonuses}"
-                    HeightRequest="125">
-                    <!-- Фиксированная высота для трех элементов -->
-                    <!-- Отступы между элементами -->
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Padding="2">
-                                <Frame CornerRadius="10" Padding="10" Margin="0,5" BackgroundColor="#FFFFFF">
-                                    <!-- Белый фон для Frame -->
-                                    <!-- Отступы внутри элемента -->
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
-                                        <Button BindingContext="{Binding}" Clicked="openButt" HorizontalOptions="EndAndExpand" Text="Посмотреть" BackgroundColor="Salmon" TextColor="White" FontAttributes="Bold" CornerRadius="20"/>
-                                    </StackLayout>
-                                </Frame>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+            </Frame>
+        </StackLayout>
+
+        <!-- Блок с кнопками, прижатый к нижней части -->
+        <StackLayout Background="#6A5ACD" VerticalOptions="End" Padding="0, 0, 0, 20">
+            <StackLayout Orientation="Horizontal" Spacing="20" Padding="20" HorizontalOptions="Center">
+                <!-- Кнопка "Редактирование профиля" -->
+                <Button Clicked="edit" 
+                        BackgroundColor="Transparent" 
+                        Background="NavajoWhite" 
+                        ImageSource="profile.png" 
+                        HeightRequest="60" 
+                        WidthRequest="60" 
+                        CornerRadius="30"
+                        >
+                </Button>
+
+                <!-- Кнопка "Доступность" -->
+                <Button Clicked="accesse" 
+                        BackgroundColor="Transparent" 
+                        Background="NavajoWhite" 
+                        HeightRequest="60" 
+                        WidthRequest="60" 
+                        ImageSource="clock.png" 
+                        CornerRadius="30">
+                </Button>
             </StackLayout>
-        </Frame>
-
-
-        <!-- Кнопка "Редактирование профиля" -->
-        <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">
-            <Button Text="Профиль" 
-                    Clicked="edit" 
-                    BackgroundColor="Transparent"
-                    TextColor="Black"
-                    FontAttributes="Bold"
-                    FontSize="16"
-                    CornerRadius="25"
-                    HeightRequest="60"/>
-        </Frame>
-
-        <!-- Кнопка "Доступность" -->
-        <Frame CornerRadius="25" Padding="0" HasShadow="True" BackgroundColor="White">
-            <Button Text="Доступность" 
-                    Clicked="accesse" 
-                    BackgroundColor="Transparent"
-                    TextColor="Black"
-                    FontAttributes="Bold"
-                    FontSize="16"
-                    CornerRadius="25"
-                    HeightRequest="60"/>
-        </Frame>
-    </StackLayout>
+        </StackLayout>
+    </Grid>
 </ContentPage>
